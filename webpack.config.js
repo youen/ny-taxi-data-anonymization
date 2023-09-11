@@ -3,7 +3,7 @@ import HtmlWebPackPlugin from 'html-webpack-plugin';
 export default {
     resolve: {
         modules: ["./src", "node_modules"],
-        extensions: [".js", ".es", ".elm", ".scss", ".png", ".svg"]
+        extensions: [".js", ".es", ".elm", ".scss", ".png", ".gif", "jpg"]
     },
     mode: "development",
     module: {
@@ -15,9 +15,20 @@ export default {
                 options: {}
             }
         },
+
         {
 
-            test: /\.svg/,
+            test: /\.jpg/,
+
+            type: 'asset/resource',
+            generator: {
+                filename: 'images/[name][ext]',
+            }
+
+        },
+        {
+
+            test: /\.gif/,
 
             type: 'asset/resource',
             generator: {

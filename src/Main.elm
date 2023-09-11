@@ -3,7 +3,7 @@ module Main exposing (..)
 import Array
 import Browser
 import Date exposing (format, fromPosix, month)
-import Element exposing (Color, Element, alignBottom, alignLeft, alignRight, alignTop, centerX, centerY, clip, clipX, clipY, column, el, explain, fill, fillPortion, height, image, maximum, minimum, padding, paddingEach, paddingXY, paragraph, px, rgb, rgb255, row, scrollbarX, scrollbarY, spaceEvenly, spacing, text, width)
+import Element exposing (Color, Element, alignBottom, alignLeft, alignRight, alignTop, centerX, centerY, clip, clipX, clipY, column, el, explain, fill, fillPortion, height, image, maximum, minimum, padding, paddingEach, paddingXY, paragraph, px, rgb, rgb255, row, scrollbarX, scrollbarY, spaceEvenly, spacing, spacingXY, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -13,7 +13,6 @@ import Json.Decode as Decode exposing (..)
 import Platform.Cmd as Cmd
 import Set
 import Time exposing (Posix, millisToPosix, toHour, toMinute, toSecond, utc)
-import Element exposing (spacingXY)
 
 
 
@@ -163,7 +162,7 @@ allSteps =
         , { imageSrc = "images/photo-protection.png"
           , title = "L'Art de l'Anonymat"
           , description =
-                """Le k-anonimat et la l-diversité deviennent nos alliés pour protéger l'identité des voyageurs. Une nouvelle carte, insaisissable, cache les véritables itinéraires."""
+                """Le k-anonymat et la l-diversité deviennent nos alliés pour protéger l'identité des voyageurs. Une nouvelle carte, insaisissable, cache les véritables itinéraires."""
           , explication = """
           À ce stade, nous abordons l'anonymisation des données, une étape cruciale pour préserver la confidentialité des trajets tout en maintenant la pertinence des données. Deux concepts clés entrent en jeu : le k-anonymat et la l-diversité.
 
@@ -172,34 +171,10 @@ Le k-anonymat garantit que chaque combinaison de quasi-identifiants, comprenant 
 La l-diversité s'assure que les groupes de trajets partageant les mêmes quasi-identifiants présentent une diversité suffisante dans leurs zones d'arrivée, évitant ainsi toute révélation involontaire de destinations particulières. Cette mesure contribue à maintenir un équilibre entre la confidentialité des trajets et la nécessité de conserver des données utiles pour l'analyse. 
 SIGO facilite la mise en œuvre de ces techniques d'anonymisation de manière efficace et sécurisée."""
           }
-        , { imageSrc = "images/nombre_de_voyages_par_zone_d_arrivee-sigo-all.png"
-          , title = "Le Masque de l'Anonymat"
-          , description =
-                """Les données anonymisées ne révèlent aucune différence visible sur la distribution des trajets. La ville demeure insensible aux secrets enfouis."""
-          , explication = """Une fois les techniques de k-anonymat et de l-diversité appliquées, les données anonymisées sont révélées. À première vue, elles ne révèlent aucune différence visible sur la distribution des trajets par rapport à l'étape précédente. Cette étape démontre l'efficacité de l'anonymisation pour maintenir l'apparence générale des données intacte."""
-          }
-        , { imageSrc = "images/nombre_de_voyages_par_zone_d_arrivee-sigo-passenger.png"
-          , title = "Le Silence Anonyme"
-          , description =
-                """Le filtre du nombre de passagers ne dévoile rien de plus. Les ombres restent impénétrables."""
-          , explication = """Le filtrage du nombre de passagers se poursuit dans cette étape, mais il ne dévoile rien de plus. L'anonymisation protége les informations sensibles tout en préservant l'utilité des données. Cette étape met en évidence la robustesse de l'anonymisation face à différents types de requêtes."""
-          }
-        , { imageSrc = "images/nombre_de_voyages_par_zone_d_arrivee-sigo-date.png"
-          , title = "L'Heure de l'Oubli"
-          , description =
-                """Le temps ne trahit pas. Les mystères demeurent cachés dans les plis de la nuit."""
-          , explication = """L'anonymisation basée sur l'heure de départ continue de préserver la confidentialité des données, empêchant toute divulgation non autorisée des informations sensibles. Cette étape souligne l'importance de l'anonymisation temporelle pour garantir la protection des données des voyageurs."""
-          }
-        , { imageSrc = "images/nombre_de_voyages_par_zone_d_arrivee-sigo-localisation.png"
-          , title = "Le Quartier Oublié"
-          , description =
-                """Aucune destination ne transparaît. Les données ont été altérées pour garantir le 3-anonymat. Le secret de la star reste à jamais préservé."""
-          , explication = """Dans cette dernière étape, aucune destination respecte les trois critères. Les données ont été altérées de manière à garantir le 3-anonymat, empêchant ainsi toute déduction de la destination de la star."""
-          }
         , { imageSrc = "images/identifiants_des_zones.png"
           , title = "La Distribution des Identifiants"
           , description = """La carte révèle des identifiants de zones, mais leur distribution est trop visible, mettant en péril l'anonymat des trajets. Leur agencement dévoile déjà des secrets."""
-          , explication = 
+          , explication =
                 """Sigo construit un arbre de généralisation en séparant récursivement en deux parties le jeu de données selon chaque axes de l'espace des quasi-identifiants. Pour que la généralisation regroupe des données proches il est important d'avoir une relation d'ordre sur chaque axe. Par exemple, les dates sont bien ordonnées chronologiquement donc la généralisation va regrouper les trajets qui une heure de départ proches. Par contre les identifiants de zones ne sont pas ordonnée par proximité. Comme on peut le voir sur la carte des identifiants élevés (blanc) peuvent êtres entourés de zone avec des identifiants faible (sombre). par conséquence la généralisation va regrouper des zones tres éloignées géographiquements."""
           }
         , { imageSrc = "images/ordonnancement_des_zones.png"
@@ -208,11 +183,45 @@ SIGO facilite la mise en œuvre de ces techniques d'anonymisation de manière ef
           , explication =
                 """Pour éviter le problème d'absence de relation d'ordre sémantique, il faut modifier l'indexation des zones pour redonner un sens de proxymité à la relation d'ordre. Nous avons choisi de calculer une aproximation du plus court chemin qui passe par toutes les zones. Nous avons determiné les centroïdes de chaque zone et établie une matrice de distance entre chaque zone. Chaque étape du chemin sera le nouvel indice de la zone correspondant. On peut constater sur la carte que les zones avec des indices proches sont géographiquement proches."""
           }
+        , { imageSrc = "images/nombre_de_voyages_par_zone_d_arrivee-sigo-all.gif"
+          , title = "Le Masque de l'Anonymat"
+          , description =
+                """Les données anonymisées ne révèlent aucune différence visible sur la distribution des trajets. La ville demeure insensible aux secrets enfouis."""
+          , explication = """Une fois les techniques de k-anonymat et de l-diversité appliquées, les données anonymisées sont révélées. À première vue, elles ne révèlent aucune différence visible sur la distribution des trajets par rapport à l'étape précédente. Cette étape démontre l'efficacité de l'anonymisation pour maintenir l'apparence générale des données intacte."""
+          }
+        , { imageSrc = "images/nombre_de_voyages_par_zone_d_arrivee-sigo-passenger.gif"
+          , title = "Le Silence Anonyme"
+          , description =
+                """Le filtre du nombre de passagers ne dévoile rien de plus. Les ombres restent impénétrables."""
+          , explication = """Le filtrage du nombre de passagers se poursuit dans cette étape, mais il ne dévoile rien de plus. L'anonymisation protége les informations sensibles tout en préservant l'utilité des données. Cette étape met en évidence la robustesse de l'anonymisation face à différents types de requêtes."""
+          }
+        , { imageSrc = "images/nombre_de_voyages_par_zone_d_arrivee-sigo-date.gif"
+          , title = "L'Heure de l'Oubli"
+          , description =
+                """Le temps ne trahit pas. Les mystères demeurent cachés dans les plis de la nuit."""
+          , explication = """L'anonymisation basée sur l'heure de départ continue de préserver la confidentialité des données, empêchant toute divulgation non autorisée des informations sensibles. Cette étape souligne l'importance de l'anonymisation temporelle pour garantir la protection des données des voyageurs."""
+          }
+        , { imageSrc = "images/nombre_de_voyages_par_zone_d_arrivee-sigo-localisation.gif"
+          , title = "Le Quartier Oublié"
+          , description =
+                """Aucune destination ne transparaît. Les données ont été altérées pour garantir le 3-anonymat. Le secret de la star reste à jamais préservé."""
+          , explication = """Dans cette dernière étape, aucune destination respecte les trois critères. Les données ont été altérées de manière à garantir le 3-anonymat, empêchant ainsi toute déduction de la destination de la star."""
+          }
         , { imageSrc = "images/mirror.png"
           , title = "Il Descendait des Taxis"
           , description =
                 """Les reflets révèlent deux facettes du mystère. Le miroir dévoile un autre secret, une nouvelle quête commence"""
           , explication = """Pour la recherche de la données sensible, la zone de destination, nous avons utilisé trois informations quasi-identifiantes : le nombre de passager, l'heure de départ et la la zone de départ. Mais à partir d'une photo d'un homme sortant d'un taxi nous pouvons avons un problème mirroir. la donnée sensible sera la zone de départ et les quasi-identifiants seront le nombre de passagers, l'heure d'arrivée, et la zone d'arrivée. Il faut donc protéger également le jeu de données contre ce type d'attaque. On peut soit modifier la configuration de SIGO pour ajouter les données sensibles et les quasi identiants. Soit faire une nouvelle passe d'anonymisation avec une configuration dédiée."""
+          }
+        , { imageSrc = "images/cgi_logo.jpg"
+          , title = "Crédits"
+          , description =
+                """
+                Le partage est notre force !
+                """
+          , explication =  """
+          SIGO est un outil open source dévelopé par CGI. Vous pouvez retouvez les scripts sur notre page Github
+          """
           }
         ]
 
@@ -291,11 +300,10 @@ explicationView element =
         )
 
 
-showStep : StepContent  -> List (Element Msg)
+showStep : StepContent -> List (Element Msg)
 showStep step =
-    [
-        -- arianeView allSteps currentStep
-     el [ centerX, Font.center, Font.bold, Font.size 32, width fill ] <| text step.title
+    [ -- arianeView allSteps currentStep
+      paragraph [ centerX, Font.center, Font.bold, Font.size 32, width fill ] [ text step.title ]
     , el
         [ centerX
         , centerY
@@ -303,7 +311,7 @@ showStep step =
         , padding 10
         ]
       <|
-        border (image [ width fill] { src = step.imageSrc, description = step.description })
+        border (image [ width fill ] { src = step.imageSrc, description = step.description })
     , paragraph [ height fill, width <| maximum 500 fill, centerX, centerY, Font.justify, Font.size 20 ]
         [ el
             [ alignLeft
@@ -327,9 +335,9 @@ showStep step =
         [ centerX
         , alignBottom
         , Border.solid
-        , Border.widthEach {bottom = 1, left = 0, right = 0, top = 0}
+        , Border.widthEach { bottom = 1, left = 0, right = 0, top = 0 }
         , Border.rounded 3
-        , width  (fill |> maximum  200) 
+        , width (fill |> maximum 200)
         , height <| px 10
         , spacingXY 0 10
         ]
@@ -339,8 +347,7 @@ showStep step =
 
 centerView : Model -> List (Element Msg)
 centerView model =
-    List.concat (List.map showStep <| Array.toList allSteps )
-
+    List.concat (List.map showStep <| Array.toList allSteps)
 
 
 view model =
