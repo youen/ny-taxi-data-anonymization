@@ -1,0 +1,51 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": 500,
+    "height": 300,
+    "data": {
+        "url": "yellow-tripdata_2023-06-23.json"
+
+
+    },
+    "transform": [
+        {
+            "aggregate": [
+                {
+                    "op": "count",
+                    "field": "Trip_distance",
+                    "as": "avg_Trip_distance"
+                }
+            ],
+            "groupby": [
+                "DOLocationID"
+            ]
+        },
+        {
+            "lookup": "DOLocationID",
+            "from": {
+                "data": {
+                    "url": "../../zone_map.topojson.json",
+                    "format": {
+                        "type": "topojson",
+                        "feature": "zone_map.geojson"
+                    }
+                },
+                "key": "properties.objectid",
+                "fields": [
+                    "geometry",
+                    "type"
+                ]
+            }
+        }
+    ],
+    "projection": {
+        "type": "albersUsa"
+    },
+    "mark": "geoshape",
+    "encoding": {
+        "color": {
+            "field": "avg_Trip_distance",
+            "type": "quantitative"
+        }
+    }
+}

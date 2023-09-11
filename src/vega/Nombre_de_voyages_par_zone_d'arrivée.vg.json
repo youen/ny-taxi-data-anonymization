@@ -1,0 +1,110 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": 350,
+    "height": 300,
+    "data": {
+        "url": "../../zone_map.topojson.json",
+        "format": {
+            "type": "topojson",
+            "feature": "zone_map.geojson"
+        }
+    },
+    "layer": [
+        {
+            "projection": {
+                "type": "albersUsa"
+            },
+            "mark": {
+                "type": "geoshape",
+                "stroke": "#888",
+                "strokeWidth": 0.5,
+                "fill": null
+            },
+            "encoding": {}
+        },
+        {
+            "data": {
+                "url": "yellow-tripdata_2023-06-23.json"
+            },
+            "transform": [
+                {
+                    "aggregate": [
+                        {
+                            "op": "count",
+                            "field": "*",
+                            "as": "count_trips"
+                        }
+                    ],
+                    "groupby": [
+                        "DOLocationID"
+                    ]
+                },
+                {
+                    "lookup": "DOLocationID",
+                    "from": {
+                        "data": {
+                            "url": "../../zone_map.topojson.json",
+                            "format": {
+                                "type": "topojson",
+                                "feature": "zone_map.geojson"
+                            }
+                        },
+                        "key": "properties.objectid",
+                        "fields": [
+                            "geometry",
+                            "type"
+                        ]
+                    }
+                }
+            ],
+            "projection": {
+                "type": "albersUsa"
+            },
+            "mark": {
+                "type": "geoshape",
+                "stroke": "#888",
+                "strokeWidth": 0.1
+            },
+            "encoding": {
+                "color": {
+                    "field": "count_trips",
+                    "type": "quantitative",
+                    "scale": {
+                        "scheme": "darkgold"
+                    },
+                    "title": "Nombre de Voyages"
+                }
+            }
+        }
+    ],
+    "title": "Les Zones de Taxi de New York City",
+    "config": {
+        "axis": {
+            "labelFont": "Helvetica Neue",
+            "labelFontSize": 12,
+            "domainColor": "#fff",
+            "gridColor": "#888",
+            "tickColor": "#fff"
+        },
+        "legend": {
+            "titleFont": "Helvetica Neue",
+            "titleFontSize": 12
+        },
+        "background": "black",
+        "view": {
+            "stroke": "#888"
+        },
+        "title": {
+            "color": "#fff",
+            "subtitleColor": "#fff"
+        },
+        "style": {
+            "guide-label": {
+                "fill": "#fff"
+            },
+            "guide-title": {
+                "fill": "#fff"
+            }
+        }
+    }
+}

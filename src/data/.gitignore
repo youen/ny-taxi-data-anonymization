@@ -1,0 +1,5 @@
+original/**/*.json
+original/**/*.jsonl
+
+sigo/**/*.json
+sigo/**/*.jsonl

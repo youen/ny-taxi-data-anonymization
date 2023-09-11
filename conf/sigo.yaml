@@ -1,0 +1,10 @@
+version: "1"
+kAnonymity: 3
+lDiversity: 2
+sensitives:
+  - DOLocationID
+aggregation: meanAggregation 
+rules:
+  - name: "Tpep_pickup_datetime"
+  - name: "PULocationID"
+  - name: "Passenger_count"

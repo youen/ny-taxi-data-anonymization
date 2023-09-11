@@ -1,0 +1,26 @@
+{
+  "name": "sigo-privacy-quest",
+  "version": "0.1.0",
+  "license": "GPL-3.0-only",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "webpack --mode production",
+    "watch": "webpack --mode development --watch",
+    "dev": "webpack serve --open --mode development --port 3000",
+    "errors": "webpack --mode development --display-error-details"
+  },
+  "dependencies": {
+    "elm-webpack-loader": "^8.0.0",
+    "topojson-server": "^3.0.1",
+    "vega": "^5.25.0",
+    "vega-cli": "^5.25.0",
+    "vega-lite": "^5.14.1"
+  },
+  "devDependencies": {
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.5.3",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
+  }
+}

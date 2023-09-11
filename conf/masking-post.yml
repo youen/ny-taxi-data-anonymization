@@ -1,0 +1,29 @@
+version: "1"
+caches:
+  zone : {}
+
+masking:
+
+  - selector:
+
+  - selector:
+      jsonpath: "DOLocationID"
+    masks:
+      - template : "{{int .DOLocationID}}"
+      - fromjson: DOLocationID
+      - fromCache : zone
+    preserve: "notInCache"
+
+  - selector:
+      jsonpath: "PULocationID"
+    masks:
+      - template : "{{int .PULocationID}}"
+      - fromjson: PULocationID
+      - fromCache : zone
+    preserve: "notInCache"
+
+  - selector:
+      jsonpath: "Passenger_count"
+    masks:
+      - template : "{{int .Passenger_count}}"
+      - fromjson: Passenger_count
