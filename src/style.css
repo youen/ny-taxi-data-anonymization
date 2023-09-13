@@ -37,3 +37,29 @@
   img-comparison-slider figure img {
     width: 100%;
   }
+
+  /* Style pour les liens sur fond blanc */
+a {
+    color: #000000; /* Couleur du lien */
+    text-decoration: none; /* Supprime le soulignement par défaut */
+    transition: color 0.3s, background-color 0.3s; /* Transition pour les effets au survol */
+  
+    /* Effet d'ombre légère pour un aspect mystérieux */
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Style au survol du lien */
+  a:hover {
+    color: #ff5500; /* Couleur du lien au survol */
+    background-color: #fff; /* Fond blanc au survol */
+  }
+
+  p:first-child {
+    margin-top:  0px;
+
+  }
+
+  p:last-child {
+    margin-bottom:  0px;
+
+  }
