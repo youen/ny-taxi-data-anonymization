@@ -22,6 +22,16 @@ export default {
             },
             {
 
+                test: /\.ico/,
+
+                type: 'asset/resource',
+                generator: {
+                    filename: '[name][ext]',
+                }
+
+            },
+            {
+
                 test: /\.jpg/,
 
                 type: 'asset/resource',

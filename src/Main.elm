@@ -515,7 +515,7 @@ main =
         , subscriptions = subscriptions
         , view =
             \m ->
-                { title = "SIGO Privacy Quest !"
+                { title = "Les Secrets des Taxis de la Ville"
                 , body =
                     view m
                 }
