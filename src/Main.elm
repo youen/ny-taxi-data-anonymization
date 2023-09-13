@@ -295,7 +295,7 @@ Pour en savoir plus sur notre suite d'outils ([LINO](https://github.com/CGI-FR/L
 
 Vous pouvez explorer les scripts utilisés pour cette investigation sur notre page [projet GitHub](https://github.com/youen/ny-taxi-data-anonymization).
 
-N'hésitez pas à nous faire part de vos retours, commentaires ou suggestions en nous envoyant un e-mail à [LINO.fr@cgi.com](mailto://LINO.fr@cgi.com) ou en ouvrant des tickets sur notre projet GitHub. Vos contributions sont précieuses pour continuer à améliorer notre quête pour la protection des données et la résolution des mystères de l'open data.
+N'hésitez pas à nous faire part de vos retours, commentaires ou suggestions en nous envoyant un e-mail à [LINO.fr@cgi.com](mailto:LINO.fr@cgi.com) ou en ouvrant des tickets sur notre projet GitHub. Vos contributions sont précieuses pour continuer à améliorer notre quête pour la protection des données et la résolution des mystères de l'open data.
 
 
 > L'équipe CGI - LINO
