@@ -16,11 +16,14 @@ import c6 from 'images/nombre_de_voyages_par_zone_d_arrivee-sigo-date.gif';
 import c7 from 'images/nombre_de_voyages_par_zone_d_arrivee-sigo-localisation.gif';
 import c8 from 'images/nombre_de_voyages_par_zone_d_arrivee-sigo-passenger.gif';
 
-
 import mirror from 'images/mirror.png'; 
 import ordonnancement_des_zones from 'images/ordonnancement_des_zones.png'; 
 import identifiants_des_zones from 'images/identifiants_des_zones.png'; 
 
 import cgi_logo from 'images/cgi_logo.jpg'; 
+
+import { ImgComparisonSlider } from 'img-comparison-slider';
+import css from "style.css";
+
 
 var app = Elm.Main.init();

@@ -12,14 +12,17 @@
   },
   "dependencies": {
     "elm-webpack-loader": "^8.0.0",
+    "img-comparison-slider": "^8.0.1",
     "topojson-server": "^3.0.1",
     "vega": "^5.25.0",
     "vega-cli": "^5.25.0",
     "vega-lite": "^5.14.1"
   },
   "devDependencies": {
+    "css-loader": "^6.8.1",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.3",
+    "style-loader": "^3.3.3",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1"
   }
