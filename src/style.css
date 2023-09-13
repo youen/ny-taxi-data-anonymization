@@ -5,22 +5,35 @@
 
   .before figcaption,
   .after figcaption {
-    background: #fff;
+    background: #ffffff00;
     border: 1px solid #c0c0c0;
-    border-radius: 12px;
-    color: #2e3452;
-    opacity: 0.8;
-    padding: 12px;
+    border-radius: 0px;
+    color: #ffffff;
+    opacity: 1;
+    padding: 5px;
     position: absolute;
-    top: 50%;
     transform: translateY(-50%);
     line-height: 100%;
   }
 
   .before figcaption {
     left: 12px;
+    top: 20%;
+
   }
 
   .after figcaption {
     right: 12px;
+    top: 80%;
+  }
+
+  img-comparison-slider  {
+    width: 100%;
+  }
+
+  img-comparison-slider figure {
+    width: 100%;
+  }
+  img-comparison-slider figure img {
+    width: 100%;
   }

@@ -114,12 +114,14 @@ nextStepButton =
             ]
             { onPress = Just NextStep, label = text "Continuer" }
 
+
 type alias ImageDiffConfig =
-        { label_before : String
-        , img_before : String
-        , label_after : String
-        , img_after : String
-        }
+    { label_before : String
+    , img_before : String
+    , label_after : String
+    , img_after : String
+    }
+
 
 type Image
     = ImageSimple String
@@ -166,13 +168,25 @@ allSteps =
                 """Avec une loupe virtuelle, nous réduisons les destinations possibles, filtrant les trajets à trois passagers. La carte se transforme, éclaircissant l'obscurité, mais le mystère demeure."""
           , explication = text """Lors de cette étape, nous avons appliqué un filtre sur le nombre de passagers pour ne conserver que les trajets avec trois passagers. Cela a réduit le nombre de destinations possibles, simplifiant ainsi la carte géographique. Nous avons effectué cette opération en filtrant les données brutes pour ne conserver que les trajets répondant à ce critère spécifique."""
           }
-        , { image = ImageSimple "images/nombre_de_voyages_par_zone_d_arrivee-original-date.png"
+        , { image =
+                ImageDiff
+                    { label_before = "passagers = 3"
+                    , img_before = "images/nombre_de_voyages_par_zone_d_arrivee-original-passenger.png"
+                    , label_after = "+ filtre date"
+                    , img_after = "images/nombre_de_voyages_par_zone_d_arrivee-original-date.png"
+                    }
           , title = "Le Temps Cache ses Secrets"
           , description =
                 """Les métadonnées révèlent l'heure de la photo. Le filtre temporel se resserre. La carte s'anime sous la lumière tamisée du crépuscule, mais le voile persiste."""
           , explication = text """Dans cette étape, nous avons utilisé les métadonnées de l'image de la star pour déterminer l'heure à laquelle la photo a été prise. En analysant ces métadonnées, nous avons filtré les données brutes des trajets pour ne conserver que les trajets qui correspondaient à l'heure de prise de la photo. Cela nous a permis de restreindre davantage la liste des destinations possibles, en fonction de l'heure exacte de la publication de la photo."""
           }
-        , { image = ImageSimple "images/nombre_de_voyages_par_zone_d_arrivee-original-localisation.png"
+        , { image =
+                ImageDiff
+                    { label_before = "passagers + date"
+                    , img_before = "images/nombre_de_voyages_par_zone_d_arrivee-original-date.png"
+                    , label_after = "+ filtre zone"
+                    , img_after = "images/nombre_de_voyages_par_zone_d_arrivee-original-localisation.png"
+                    }
           , title = "L'Énigme du Quartier Soho"
           , description =
                 """On reconait le quartier Soho sur le cliché, le voile qui entoure la destination se lève. La carte se simplifie, ne laissant qu'une seule destination : Midtown Center. Le mystère qui a enlacé la star et ses filles commence à se dissiper."""
@@ -204,25 +218,49 @@ SIGO facilite la mise en œuvre de ces techniques d'anonymisation de manière ef
                 text
                     """Pour éviter le problème d'absence de relation d'ordre sémantique, il faut modifier l'indexation des zones pour redonner un sens de proxymité à la relation d'ordre. Nous avons choisi de calculer une aproximation du plus court chemin qui passe par toutes les zones. Nous avons determiné les centroïdes de chaque zone et établie une matrice de distance entre chaque zone. Chaque étape du chemin sera le nouvel indice de la zone correspondant. On peut constater sur la carte que les zones avec des indices proches sont géographiquement proches."""
           }
-        , { image = ImageSimple "images/nombre_de_voyages_par_zone_d_arrivee-sigo-all.gif"
+        , { image =
+                ImageDiff
+                    { label_before = "original"
+                    , img_before = "images/nombre_de_voyages_par_zone_d_arrivee-original-all.png"
+                    , label_after = "anonymisé"
+                    , img_after = "images/nombre_de_voyages_par_zone_d_arrivee-sigo-all.png"
+                    }
           , title = "Le Masque de l'Anonymat"
           , description =
                 """Les données anonymisées ne révèlent aucune différence visible sur la distribution des trajets. La ville demeure insensible aux secrets enfouis."""
           , explication = text """Une fois les techniques de k-anonymat et de l-diversité appliquées, les données anonymisées sont révélées. À première vue, elles ne révèlent aucune différence visible sur la distribution des trajets par rapport à l'étape précédente. Cette étape démontre l'efficacité de l'anonymisation pour maintenir l'apparence générale des données intacte."""
           }
-        , { image = ImageSimple "images/nombre_de_voyages_par_zone_d_arrivee-sigo-passenger.gif"
+        , { image =
+                ImageDiff
+                    { label_before = "original"
+                    , img_before = "images/nombre_de_voyages_par_zone_d_arrivee-original-passenger.png"
+                    , label_after = "anonymisé"
+                    , img_after = "images/nombre_de_voyages_par_zone_d_arrivee-sigo-passenger.png"
+                    }
           , title = "Le Silence Anonyme"
           , description =
                 """Le filtre du nombre de passagers ne dévoile rien de plus. Les ombres restent impénétrables."""
           , explication = text """Le filtrage du nombre de passagers se poursuit dans cette étape, mais il ne dévoile rien de plus. L'anonymisation protége les informations sensibles tout en préservant l'utilité des données. Cette étape met en évidence la robustesse de l'anonymisation face à différents types de requêtes."""
           }
-        , { image = ImageSimple "images/nombre_de_voyages_par_zone_d_arrivee-sigo-date.gif"
+        , { image =
+                ImageDiff
+                    { label_before = "original"
+                    , img_before = "images/nombre_de_voyages_par_zone_d_arrivee-original-date.png"
+                    , label_after = "anonymisé"
+                    , img_after = "images/nombre_de_voyages_par_zone_d_arrivee-sigo-date.png"
+                    }
           , title = "L'Heure de l'Oubli"
           , description =
                 """Le temps ne trahit pas. Les mystères demeurent cachés dans les plis de la nuit."""
           , explication = text """L'anonymisation basée sur l'heure de départ continue de préserver la confidentialité des données, empêchant toute divulgation non autorisée des informations sensibles. Cette étape souligne l'importance de l'anonymisation temporelle pour garantir la protection des données des voyageurs."""
           }
-        , { image = ImageSimple "images/nombre_de_voyages_par_zone_d_arrivee-sigo-localisation.gif"
+        , { image =
+                ImageDiff
+                    { label_before = "original"
+                    , img_before = "images/nombre_de_voyages_par_zone_d_arrivee-original-localisation.png"
+                    , label_after = "anonymisé"
+                    , img_after = "images/nombre_de_voyages_par_zone_d_arrivee-sigo-localisation.png"
+                    }
           , title = "Le Quartier Oublié"
           , description =
                 """Aucune destination ne transparaît. Les données ont été altérées pour garantir le 3-anonymat. Le secret de la star reste à jamais préservé."""
@@ -250,7 +288,7 @@ SIGO facilite la mise en œuvre de ces techniques d'anonymisation de manière ef
         ]
 
 
-beforeAfterSlider : ImageDiffConfig -> (Element Msg)
+beforeAfterSlider : ImageDiffConfig -> Element Msg
 beforeAfterSlider image_diff =
     html <|
         Html.node "img-comparison-slider"
